@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  laby1np-app:
+    build: ..
+    image: laby1np-image
+    container_name: laby1np-container
+    environment:
+      - ENV_ORDER_DIR=./orders
+    ports:
+      - '8080:8080'
+    volumes:
+      - /home/jedryczkatymon/Documents/Programming/Laby1NP/orders:/app/orders
+    restart: no
+
+  # gitlab:
+  #   image: 'gitlab/gitlab-ce:18.3.2-ce.0'
+  #   container_name: 'gitlab'
+  #   environment:
+  #     GITLAB_OMNIBUS_CONFIG: |
+  #       gitlab_rails['time_zone'] = 'Europe/Warsaw'
+  #       external_url 'http://host.docker.internal:4321'
+  #       letsencrypt['enable'] = false
+  #       nginx['listen_port'] = 4321
+  #       nginx['listen_https'] = false
+  #       nginx['redirect_http_to_https'] = false
+  #       nginx['gzip_enabled'] = false
+  #       gitlab_kas['enable'] = false
+  #       gitlab_rails['smtp_enable'] = false
+  #       mattermost['enable'] = false
+  #       prometheus['enable'] = false
+  #       alertmanager['enable'] = false
+  #       prometheus_monitoring['enable'] = false
+  #       postgres_exporter['enable'] = false
+  #       node_exporter['enable'] = false
+  #       redis_exporter['enable'] = false
+  #       monitoring_role['enable'] = false
+  #       gitlab_exporter['enable'] = false
+  #       puma['worker_processes'] = 0
+  #       sidekiq['concurrency'] = 10
+  #       gitlab_rails['usage_ping_enabled'] = false
+  #       logrotate['enable'] = false
+  #       gitlab_rails['gitlab_kas_enabled'] = false
+  #       redis_sentinel_role['enable'] = false
+  #       sentinel['enable'] = false
+  #       gitlab_rails['registry_enabled'] = false
+  #       sidekiq['metrics_enabled'] = false
+  #       sidekiq['health_checks_enabled'] = false
+  #       gitlab_rails['kerberos_enabled'] = false
+  #       gitlab_rails['packages_enabled'] = false
+  #       gitlab_rails['dependency_proxy_enabled'] = false
+  #       gitlab_rails['geo_registry_replication_enabled'] = false
+  #       gitlab_rails['gitlab_email_enabled'] = false
+  #       gitlab_rails['incoming_email_enabled'] = false
+  #       gitlab_rails['artifacts_enabled'] = false
+  #       gitlab_rails['lfs_enabled'] = false
+  #       gitlab_rails['terraform_state_enabled'] = false
+  #       gitlab_rails['ci_secure_files_enabled'] = false
+  #   ports:
+  #     - '4321:80'
+  #   volumes:
+  #     - './config:/etc/gitlab'
+  #     - './data:/var/opt/gitlab'
