@@ -6,7 +6,14 @@ public class Order {
     private Customer customer;
     private List<Product> products;
 
+    // Domyślny konstruktor
     public Order() {
+    }
+
+    // Konstruktor z parametrami
+    public Order(Customer customer, List<Product> products) {
+        this.customer = customer;
+        this.products = products;
     }
 
     public Customer getCustomer() {
