@@ -1,7 +1,7 @@
 {
   "order": {
     "customer": {
-      "firstName": "Jan",
+      "firstName": "",
       "lastName": "Kowalski",
       "email": "jan.kowalski@example.com",
       "phone": "+48 600 123 456"
@@ -10,7 +10,7 @@
       {
         "productCode": "PRD-001",
         "quantity": 3,
-        "unit": "szt"
+        "unit": "pcs"
       },
       {
         "productCode": "PRD-102",
@@ -19,8 +19,8 @@
       },
       {
         "productCode": "PRD-210",
-        "quantity": 2,
-        "unit": "l"
+        "quantity": 1,
+        "unit": "box"
       }
     ]
   }
