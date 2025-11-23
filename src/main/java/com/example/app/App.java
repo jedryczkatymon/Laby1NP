@@ -58,13 +58,13 @@ public class App {
         }
     }
 
-    private static String generateOrderNumber(Order order) throws NoSuchAlgorithmException {
+    static String generateOrderNumber(Order order) throws NoSuchAlgorithmException {
         StringBuilder sb = new StringBuilder();
         sb.append(order.getCustomer().getFirstName()).append("|");
         sb.append(order.getCustomer().getLastName()).append("|");
         sb.append(order.getCustomer().getEmail()).append("|");
         order.getProducts().forEach(p ->
-                sb.append(p.getProductCode()).append(":").append(p.getQuantity()).append(",")
+            sb.append(p.getProductCode()).append(":").append(p.getQuantity()).append(",")
         );
 
         MessageDigest md = MessageDigest.getInstance("MD5");

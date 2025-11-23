@@ -3,67 +3,44 @@ package com.example.app;
 import com.example.model.Customer;
 import com.example.model.Order;
 import com.example.model.Product;
-import com.github.nylle.javafixture.Fixture;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AppTest {
+public class AppTest {
 
     @Test
-    void testGenerateOrderNumberWithRandomOrders() throws Exception {
-        Fixture fixture = new Fixture();
+    void testGenerateOrderNumber() throws Exception {
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("john.doe@example.com");
+        customer.setPhone("+48 600 123 456");
 
-        // Pobieramy klasę App i prywatną statyczną metodę przez reflection
-        Class<?> appClass = Class.forName("com.example.app.App");
-        Method method = appClass.getDeclaredMethod("generateOrderNumber", Order.class);
-        method.setAccessible(true);
+        Product p1 = new Product();
+        p1.setProductCode("PRD-001");
+        p1.setQuantity(10.0);
+        p1.setUnit("kg");
 
-        // Wygeneruj np. 5 różnych zamówień
-        for (int i = 0; i < 5; i++) {
-            Order order = fixture.create(Order.class);
+        Product p2 = new Product();
+        p2.setProductCode("PRD-310");
+        p2.setQuantity(500.0);
+        p2.setUnit("g");
 
-            // Upewniamy się, że order ma klienta
-            if (order.getCustomer() == null) {
-                order.setCustomer(fixture.create(Customer.class));
-            }
+        Product p3 = new Product();
+        p3.setProductCode("PRD-210");
+        p3.setQuantity(1.0);
+        p3.setUnit("t");
 
-            // Upewniamy się, że order ma produkty
-            if (order.getProducts() == null || order.getProducts().isEmpty()) {
-                List<Product> products = new ArrayList<>();
-                for (int j = 0; j < 3; j++) {
-                    products.add(fixture.create(Product.class));
-                }
-                order.setProducts(products);
-            }
+        List<Product> products = Arrays.asList(p1, p2, p3);
 
-            // Wywołanie prywatnej statycznej metody
-            String actualOrderNumber = (String) method.invoke(null, order);
+        Order order = new Order(customer, products);
 
-            // Generujemy oczekiwany wynik MD5 w teście
-            StringBuilder sb = new StringBuilder();
-            sb.append(order.getCustomer().getFirstName()).append("|")
-              .append(order.getCustomer().getLastName()).append("|")
-              .append(order.getCustomer().getEmail()).append("|");
-            order.getProducts().forEach(p ->
-                    sb.append(p.getProductCode()).append(":").append(p.getQuantity()).append(",")
-            );
+        String result = App.generateOrderNumber(order);
 
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(sb.toString().getBytes());
-            StringBuilder hex = new StringBuilder();
-            for (int j = 0; j < 6 && j < digest.length; j++) {
-                hex.append(String.format("%02X", digest[j]));
-            }
-            String expectedOrderNumber = "ORD-" + hex;
-
-            // Porównanie wyniku
-            assertEquals(expectedOrderNumber, actualOrderNumber, "Order number mismatch for random order #" + (i + 1));
-        }
+        assertEquals("ORD-13E27297139B", result);
     }
 }
